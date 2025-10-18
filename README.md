@@ -113,4 +113,4 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 ## 📜 License
 
-MIT © 2025 [Your Name]
+MIT © 2025 Ahmed Maher
