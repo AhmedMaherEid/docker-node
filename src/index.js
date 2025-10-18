@@ -46,7 +46,7 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 app.get('/', (req, res) =>{
      redisClient.set('products', 'products...');
-     res.send('<h1>Hello node ya duddde!</h1>');
+     res.send('<h1>Hello node ya duddde - from docker hub!</h1>');
 });
 
 app.get('/data', async (req, res) =>{
