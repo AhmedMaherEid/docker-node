@@ -1,46 +1,45 @@
 version: "3"
 services:
   node-app:
-    container_name: express-node-app-container
+    # container_name: express-node-app-container (only valid to be used in case of no scaling option)
     image: ahmedmaher896/node-app-repo
-    ports:
-      - "4000:4000"
+    # ports:
+    #   - "4000:4000" nginx will be the mediator from nginx port to the conatainer/s port/s
     env_file:
       - .env
     depends_on:
-      - postgres
+      - mongo
       - redis
 
-#postgres instead
-  # mongo:
-  #   image: mongo
-  #   restart: always
-  #   volumes:
-  #     - "mongo-db:/data/db"
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: example
-  # mongo-express:
-  #     image: mongo-express
-  #     restart: always
-  #     ports:
-  #       - 8081:8081
-  #     environment:
-  #       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-  #       ME_CONFIG_BASICAUTH_ENABLED: true
-  #       ME_CONFIG_BASICAUTH_USERNAME: root
-  #       ME_CONFIG_BASICAUTH_PASSWORD: example
-  #     depends_on: 
-  #       - mongo
-
-  postgres:
-      image: postgres
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - "mongo-db:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-express:
+      image: mongo-express
       restart: always
-      volumes:
-        - "postgres-db:/var/lib/postgresql/data"
+      ports:
+        - 8081:8081
       environment:
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: example
+        ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+        ME_CONFIG_BASICAUTH_ENABLED: true
+        ME_CONFIG_BASICAUTH_USERNAME: root
+        ME_CONFIG_BASICAUTH_PASSWORD: example
+      depends_on: 
+        - mongo
+
+  # postgres:
+  #     image: postgres
+  #     restart: always
+  #     volumes:
+  #       - "postgres-db:/var/lib/postgresql/data"
+  #     environment:
+  #       POSTGRES_USER: root
+  #       POSTGRES_PASSWORD: example
 
 
   
@@ -61,7 +60,7 @@ services:
 
 volumes:
   mongo-db:
-  postgres-db:
+  # postgres-db:
       
 
 
